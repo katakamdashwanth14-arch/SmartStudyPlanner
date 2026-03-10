@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Session - Smart Study</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <script type="module" src="script.js?v=9" defer></script>
+</head>
+
+<body data-theme="light">
+    <audio id="pomodoro-alarm" src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU"
+        preload="auto"></audio>
+
+    <div id="dashboard-layout" class="fade-in">
+        <nav class="sidebar slide-right">
+            <div class="logo"><i class="fa-solid fa-graduation-cap"></i> Smart Planner</div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="planner.html"><i class="fa-solid fa-list-check"></i> Study Planner</a></li>
+                <li><a href="pomodoro.html" class="active"><i class="fa-solid fa-clock"></i> Pomodoro</a></li>
+                <li><a href="notes.html"><i class="fa-solid fa-sticky-note"></i> Notes</a></li>
+                <li><a href="reminders.html"><i class="fa-solid fa-clock-rotate-left"></i> Reminders</a></li>
+                <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About</a></li>
+            </ul>
+
+            <div class="theme-switch-wrapper mt-auto">
+                <span>Theme</span>
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox">
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <button id="logout-btn" class="btn secondary-btn w-100 mt-3"><i class="fa-solid fa-right-from-bracket"></i>
+                Logout</button>
+        </nav>
+
+        <main class="main-content">
+            <header class="topbar slide-down">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="global-search" placeholder="Search across app...">
+                </div>
+                <div class="topbar-actions">
+                    <div class="notification-wrapper">
+                        <i class="fa-solid fa-bell bell-icon" id="notification-bell"></i>
+                        <span class="badge" id="reminder-counter">0</span>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=User&background=random" class="hover-scale">
+                        <span id="user-display-name">User</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-modules mt-4 stagger-1 d-flex justify-content-center">
+                <section class="card pomodoro-timer" id="pomodoro" style="width:100%; max-width:600px; padding: 40px;">
+                    <h2 class="text-center"><i class="fa-solid fa-stopwatch"></i> Focus Sessions</h2>
+
+                    <div class="timer-display pulse-anim" id="timer-display" style="font-size: 5rem;">25:00</div>
+
+                    <div class="timer-controls d-flex gap-2 justify-content-center mt-4">
+                        <button id="timer-start" class="btn primary-btn anim-btn hover-lift">START</button>
+                        <button id="timer-pause" class="btn secondary-btn hover-lift">PAUSE</button>
+                        <button id="timer-reset" class="btn danger-btn hover-lift">RESET</button>
+                    </div>
+
+                    <div class="timer-modes d-flex gap-2 justify-content-center mt-4">
+                        <button id="mode-focus" class="btn mode-btn active hover-lift">Deep Focus (25m)</button>
+                        <button id="mode-break" class="btn mode-btn hover-lift">Short Break (5m)</button>
+                    </div>
+                </section>
+            </div>
+
+            <div id="search-results-modal" class="modal hidden fade-in">
+                <div class="modal-content bounce-in">
+                    <span class="close-modal">&times;</span>
+                    <h3>Search Results</h3>
+                    <div id="search-results-container" class="mt-3"></div>
+                </div>
+            </div>
+
+            <!-- Schedule Modal -->
+            <div id="schedule-modal" class="modal hidden fade-in" style="z-index: 99999;">
+                <div class="modal-content bounce-in" style="max-width: 400px; text-align: center;">
+                    <span class="close-schedule-modal text-right"
+                        style="display:block; cursor:pointer; font-size: 20px;" aria-label="Close modal">&times;</span>
+                    <h3 class="mb-3" style="color: var(--primary);">Add Schedule Block</h3>
+                    <input type="text" id="schedule-time-input" placeholder="Time (e.g. 8:00 AM)" class="mb-3"
+                        style="width: 100%; border: 2px solid var(--border-color); border-radius: 8px; padding: 10px;">
+                    <input type="text" id="schedule-desc-input" placeholder="Activity Details" class="mb-3"
+                        style="width: 100%; border: 2px solid var(--border-color); border-radius: 8px; padding: 10px;">
+                    <button id="save-schedule-btn" class="btn primary-btn w-100 hover-lift">Save Block</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>

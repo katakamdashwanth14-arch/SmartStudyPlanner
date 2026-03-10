@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ultra Smart Study Planner - Authentication">
+    <title>Smart Study - Login & Signup</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="auth-styles.css?v=3">
+
+    <script type="module" src="auth.js?v=4" defer></script>
+</head>
+
+<body data-theme="light">
+    <!-- Theme Toggle Floating -->
+    <div class="theme-switch-wrapper floating slide-up-anim">
+        <span style="font-size: 14px; font-weight: 500;">Dark Mode</span>
+        <label class="theme-switch" for="auth-checkbox">
+            <input type="checkbox" id="auth-checkbox">
+            <div class="slider round"></div>
+        </label>
+    </div>
+
+    <!-- Advanced Immersive Animated Background -->
+    <div class="auth-bg">
+        <div class="animated-shape shape-1"></div>
+        <div class="animated-shape shape-2"></div>
+        <div class="animated-shape shape-3"></div>
+        <div class="animated-shape shape-4"></div>
+
+        <!-- Floating particles -->
+        <div class="particles">
+            <div class="particle" style="--i:1;"></div>
+            <div class="particle" style="--i:2;"></div>
+            <div class="particle" style="--i:3;"></div>
+            <div class="particle" style="--i:4;"></div>
+            <div class="particle" style="--i:5;"></div>
+        </div>
+    </div>
+
+    <!-- Container for Sliding Animation Toggle -->
+    <div class="auth-container bounce-in" id="auth-container">
+
+        <!-- Sign Up Form Side -->
+        <div class="form-container sign-up-container">
+            <form id="signup-form" novalidate>
+                <div style="text-align: center; margin-bottom: 10px;" class="slide-up-anim">
+                    <img src="user_logo.png" alt="Smart Study Logo"
+                        style="width: 70px; height: 70px; object-fit: contain; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                </div>
+                <h2 class="mb-3 slide-up-anim">Create Account</h2>
+                <div class="social-container mb-2 slide-up-anim-delay-1" style="width: 100%;">
+                    <button type="button" class="google-btn social" id="signup-google-btn"
+                        style="width: 100%; border-radius: 12px; height: 45px; cursor: pointer; color: #334155; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; background: white; border: 2px solid #e2e8f0; transition: all 0.3s ease;">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G"
+                            style="width: 20px; height: 20px; margin-right: 10px;">
+                        Sign up with Gmail
+                    </button>
+                </div>
+
+                <div class="input-container slide-up-anim-delay-2">
+                    <i class="fa-solid fa-user input-icon"></i>
+                    <input type="text" id="signup-name" placeholder="Full Name" required minlength="4">
+                </div>
+
+                <div class="input-container slide-up-anim-delay-3">
+                    <i class="fa-solid fa-envelope input-icon"></i>
+                    <input type="email" id="signup-email" placeholder="Email ID" required>
+                </div>
+
+                <div class="input-container slide-up-anim-delay-4">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="signup-password" placeholder="Password (Min 6 chars)" required
+                        minlength="6">
+                </div>
+
+                <p id="signup-error" class="error-msg hidden"></p>
+                <button type="submit" class="auth-btn pulse-hover mt-3 slide-up-anim-delay-5">Sign Up</button>
+
+                <p class="mobile-switch mt-3 hide-on-desktop">Already registered? <span class="mobile-toggle"
+                        id="mobile-to-login">Sign In</span></p>
+            </form>
+        </div>
+
+        <!-- Login Form Side -->
+        <div class="form-container sign-in-container">
+            <form id="login-form" novalidate>
+                <div style="text-align: center; margin-bottom: 10px;" class="slide-up-anim">
+                    <img src="user_logo.png" alt="Smart Study Logo"
+                        style="width: 70px; height: 70px; object-fit: contain; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                </div>
+                <h2 class="mb-3 slide-up-anim">Welcome Back</h2>
+                <div class="social-container mb-2 slide-up-anim-delay-1" style="width: 100%;">
+                    <button type="button" class="google-btn social" id="login-google-btn"
+                        style="width: 100%; border-radius: 12px; height: 45px; cursor: pointer; color: #334155; font-weight: 600; font-size: 14px; display: flex; align-items: center; justify-content: center; background: white; border: 2px solid #e2e8f0; transition: all 0.3s ease;">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G"
+                            style="width: 20px; height: 20px; margin-right: 10px;">
+                        Sign in with Gmail
+                    </button>
+                </div>
+
+                <div class="input-container slide-up-anim-delay-2">
+                    <i class="fa-solid fa-user input-icon"></i>
+                    <input type="text" id="login-name" placeholder="Name" required minlength="4"
+                        autocomplete="username">
+                </div>
+
+                <div class="input-container slide-up-anim-delay-3">
+                    <i class="fa-solid fa-envelope input-icon"></i>
+                    <input type="email" id="login-email" placeholder="Email ID" required autocomplete="email">
+                </div>
+
+                <div class="input-container slide-up-anim-delay-4">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="login-password" placeholder="Password" required minlength="6"
+                        autocomplete="current-password">
+                </div>
+
+                <!-- Remember Me Toggle (Reminder Button) -->
+                <div class="remember-container slide-up-anim-delay-5">
+                    <label class="remember-toggle">
+                        <input type="checkbox" id="remember-me">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="remember-text">Remember me</span>
+                </div>
+
+                <p id="auth-error" class="error-msg hidden"></p>
+                <button type="submit" class="auth-btn pulse-hover slide-up-anim-delay-6">Sign In</button>
+
+                <p class="mobile-switch mt-3 hide-on-desktop">New here? <span class="mobile-toggle"
+                        id="mobile-to-signup">Sign Up</span></p>
+            </form>
+        </div>
+
+        <!-- Overlay Panel -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/online-learning-4488814-3758334.png"
+                        alt="Study Art" class="floating-img mb-3">
+                    <h2>One of us?</h2>
+                    <p>If you already have an account, just sign in. We've missed you!</p>
+                    <button class="ghost bounce-hover" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/student-studying-online-4488811-3758331.png"
+                        alt="Study Art" class="floating-img mb-3">
+                    <h2>New here?</h2>
+                    <p>Join our Smart Study platform and track your knowledge like a pro.</p>
+                    <button class="ghost bounce-hover" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Auth Simulated Backend Modal -->
+    <div id="google-auth-modal"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 9999; backdrop-filter: blur(5px); justify-content: center; align-items: center;">
+        <div
+            style="background: white; border-radius: 15px; width: 400px; padding: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); text-align: center; font-family: 'Poppins', sans-serif;">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="40"
+                style="margin-bottom: 15px;">
+            <h3 style="color: #202124; font-weight: 500; font-size: 24px; margin-bottom: 10px;">Sign in</h3>
+            <p style="color: #202124; margin-bottom: 25px;">to continue to Smart Planner</p>
+            <input type="email" id="google-email-input" placeholder="Email or phone"
+                style="width: 100%; border: 1px solid #dadce0; border-radius: 4px; padding: 13px 15px; font-size: 16px; margin-bottom: 10px; outline: none;">
+            <p id="google-auth-error"
+                style="color: #d93025; font-size: 12px; text-align: left; margin-bottom: 25px; display: none;">Please
+                enter a valid email address.</p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <button type="button" id="google-cancel-btn"
+                    style="background: transparent; border: none; color: #1a73e8; font-weight: 600; cursor: pointer; padding: 10px;">Cancel</button>
+                <button type="button" id="google-next-btn"
+                    style="background: #1a73e8; color: white; border: none; border-radius: 4px; padding: 10px 24px; font-weight: 600; cursor: pointer; font-size: 14px;">Next</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

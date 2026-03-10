@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Dashboard - Study Planner</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        body {
+            background: radial-gradient(circle at center, rgba(30, 27, 75, 0.4), rgba(15, 23, 42, 0.8)), url('login_bg.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            min-height: 100vh;
+        }
+
+
+        /* Enhanced Dashboard Animations & Layout */
+        .dashboard-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 20px;
+            padding: 40px 30px;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: slideDownFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .dashboard-hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            animation: floatCircle 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatCircle {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(20px) scale(1.1);
+            }
+        }
+
+        @keyframes slideDownFade {
+            0% {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-animated {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-top: 4px solid transparent;
+        }
+
+        .card-animated:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+            border-top: 4px solid var(--primary);
+        }
+
+        .schedule-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .schedule-section:hover {
+            background: var(--sidebar-bg);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+            transform: scale(1.01);
+        }
+
+        .blocks div {
+            animation: smoothFadeIn 0.5s ease-out forwards;
+        }
+
+        .pulse-btn {
+            animation: shadowPulse 2s infinite;
+        }
+
+        @keyframes shadowPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(108, 99, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(108, 99, 255, 0);
+            }
+        }
+    </style>
+
+    <script type="module" src="script.js?v=10" defer></script>
+</head>
+
+<body data-theme="light">
+    <!-- CO2: Media tags -->
+    <audio id="pomodoro-alarm" src="data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU"
+        preload="auto"></audio>
+
+    <div id="dashboard-layout" class="fade-in">
+
+        <!-- Animated Sidebar -->
+        <nav class="sidebar slide-right"
+            style="border-right: 1px solid var(--border-color); box-shadow: 5px 0 25px rgba(0,0,0,0.05); background: var(--sidebar-bg); backdrop-filter: blur(20px);">
+            <div class="logo glow-pulse"><i class="fa-solid fa-graduation-cap"></i> Smart Planner</div>
+            <ul class="nav-links">
+                <li><a href="dashboard.html" class="active"><i class="fa-solid fa-chart-pie"></i> Activity Board</a>
+                </li>
+                <li><a href="planner.html"><i class="fa-solid fa-list-check"></i> Task Master</a></li>
+                <li><a href="pomodoro.html"><i class="fa-solid fa-hourglass-half"></i> Focus Zone</a></li>
+                <li><a href="notes.html"><i class="fa-solid fa-book-open"></i> Brain Hub</a></li>
+                <li><a href="reminders.html"><i class="fa-solid fa-bell"></i> Alerts</a></li>
+                <li><a href="about.html"><i class="fa-solid fa-compass"></i> Discover</a></li>
+            </ul>
+
+            <!-- Dark Mode Toggle (Fixed & Restored) -->
+            <div class="theme-switch-wrapper mt-auto"
+                style="padding: 15px; background: rgba(0,0,0,0.03); border-radius: 12px; margin-bottom: 10px;">
+                <span style="font-weight: 600;"><i class="fa-solid fa-moon"></i> Dark Mode</span>
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" aria-label="Toggle dark mode">
+                    <div class="slider round"></div>
+                </label>
+            </div>
+
+            <button id="logout-btn" class="btn secondary-btn w-100 mt-2 hover-lift"><i
+                    class="fa-solid fa-power-off"></i> Logout Session</button>
+        </nav>
+
+        <main class="main-content" style="background: transparent;">
+            <header class="topbar slide-down"
+                style="border-radius: 15px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
+                <div class="search-bar"
+                    style="background: var(--card-bg); border: 2px solid transparent; transition: all 0.3s; border-radius: 30px; padding: 5px 20px;">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i>
+                    <input type="text" id="global-search" placeholder="Quick search..." aria-label="Global Search"
+                        style="background: transparent;">
+                </div>
+                <div class="topbar-actions">
+                    <div class="notification-wrapper hover-lift">
+                        <i class="fa-solid fa-bell bell-icon pulse-anim" id="notification-bell"
+                            style="color: var(--primary);"></i>
+                        <span class="badge" id="reminder-counter" style="background: var(--danger);">0</span>
+                    </div>
+                    <div class="user-profile hover-lift"
+                        style="background: var(--card-bg); padding: 5px 15px; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); gap: 10px;">
+                        <img src="https://ui-avatars.com/api/?name=User&background=6C63FF&color=fff&rounded=true"
+                            alt="User Avatar" class="hover-scale" style="width: 35px; height: 35px;">
+                        <span id="user-display-name" style="font-weight: 600;">Student</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-modules">
+
+                <!-- Hero Section -->
+                <div class="dashboard-hero stagger-1 mb-4"
+                    style="display: flex; align-items: center; justify-content: space-between; overflow: visible;">
+                    <div style="z-index: 10; position: relative;">
+                        <h1 style="font-size: 2.2rem; margin-bottom: 10px; font-weight: 800;"><span
+                                id="welcome-user-name">Student</span> 🚀</h1>
+                        <p style="font-size: 1.1rem; opacity: 0.9;">Ready to crush your goals today? Let's get to work.
+                        </p>
+                    </div>
+                    <!-- Added image for study theme -->
+                    <img src="study_illustration.png" alt="Study Setup"
+                        style="display: block; height: 160px; object-fit: cover; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: floatImage 6s ease-in-out infinite alternate; pointer-events: none; margin-right: 15px; z-index: 10; position: relative;">
+                    <style>
+                        @keyframes floatImage {
+                            0% {
+                                transform: translateY(0) rotate(-2deg);
+                                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+                            }
+
+                            100% {
+                                transform: translateY(-12px) rotate(1deg);
+                                box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4);
+                            }
+                        }
+
+                        @media(max-width: 768px) {
+                            .dashboard-hero {
+                                flex-direction: column;
+                                text-align: center;
+                            }
+
+                            .dashboard-hero img {
+                                height: 120px;
+                                margin: 20px auto 0 auto;
+                                display: none;
+                                /* optional hide on small screens */
+                            }
+                        }
+                    </style>
+                </div>
+
+                <div class="grid-layout mt-4">
+                    <!-- Progress Card -->
+                    <section class="card card-animated stagger-2" style="background: var(--card-bg);">
+                        <h3 style="color: var(--primary);"><i class="fa-solid fa-chart-column"></i> Daily Statistics
+                        </h3>
+                        <table class="progress-table w-100 mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="color: var(--text-color); opacity: 0.7;">Status</th>
+                                    <th scope="col" class="text-right" style="color: var(--text-color); opacity: 0.7;">
+                                        Count</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: 500;">Completed Tasks 🏆</td>
+                                    <td class="text-right fw-bold" style="color: var(--success); font-size: 1.2rem;">
+                                        <span id="tasks-completed">0</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 500;">Pending Tasks ⏳</td>
+                                    <td class="text-right fw-bold" style="color: var(--warning); font-size: 1.2rem;">
+                                        <span id="tasks-remaining">0</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="progress-bar-container mt-4"
+                            style="height: 12px; border-radius: 10px; background: rgba(0,0,0,0.05);">
+                            <div class="progress-bar glow-pulse" id="progress-bar"
+                                style="width: 0%; border-radius: 10px; background: linear-gradient(90deg, var(--primary), var(--secondary));">
+                            </div>
+                        </div>
+                        <p class="percentage text-right mt-2" style="font-weight: 700; color: var(--primary);"><span
+                                id="completion-percentage">0</span>% Completed</p>
+                    </section>
+
+                    <!-- Quote Card -->
+                    <section class="card card-animated stagger-3"
+                        style="background: var(--card-bg); display: flex; flex-direction: column; justify-content: center;">
+                        <h3 style="color: var(--secondary);"><i class="fa-solid fa-bolt"></i> Daily Spark</h3>
+                        <div class="quote-content mt-3" id="quote-content"
+                            style="font-size: 1.3rem; font-style: italic; line-height: 1.6; color: var(--text-color);">
+                            Loading cosmic wisdom...</div>
+                        <div class="quote-author mt-2" id="quote-author"
+                            style="font-weight: 700; text-align: right; color: var(--primary);"></div>
+                        <button id="new-quote-btn" class="btn secondary-btn w-100 mt-auto hover-lift"
+                            style="border-radius: 20px;"><i class="fa-solid fa-rotate-right"></i> Refresh Spark</button>
+                    </section>
+                </div>
+
+                <div class="grid-layout-large mt-4">
+                    <!-- Schedule Editor with improved visual structure -->
+                    <section class="card card-animated stagger-4" style="background: var(--card-bg);">
+                        <h3 style="color: var(--primary);"><i class="fa-regular fa-calendar-check"></i> Master Routine
+                        </h3>
+                        <p style="opacity: 0.7; font-size: 0.9rem; margin-bottom: 20px;">Organize your day optimally.
+                            Click 'Add Info' to create a time block.</p>
+
+                        <div class="schedule-grid"
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+
+                            <!-- Morning -->
+                            <div class="schedule-section" id="morning-schedule">
+                                <h4 style="color: #F59E0B;; border-bottom: 2px solid #F59E0B;; padding-bottom: 5px;"><i
+                                        class="fa-solid fa-sun z"></i> Morning</h4>
+                                <div class="blocks mt-2" style="min-height: 50px;"></div>
+                                <button class="btn primary-btn add-time-block w-100 mt-3 pulse-btn"
+                                    data-period="morning"
+                                    style="background: #F59E0B;; border:none; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);"><i
+                                        class="fa-solid fa-plus"></i> Add Info</button>
+                            </div>
+
+                            <!-- Afternoon -->
+                            <div class="schedule-section" id="afternoon-schedule">
+                                <h4 style="color: #EF4444;; border-bottom: 2px solid #EF4444;; padding-bottom: 5px;"><i
+                                        class="fa-solid fa-cloud-sun"></i> Afternoon</h4>
+                                <div class="blocks mt-2" style="min-height: 50px;"></div>
+                                <button class="btn primary-btn add-time-block w-100 mt-3 hover-lift"
+                                    data-period="afternoon"
+                                    style="background: #EF4444;; border:none; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);"><i
+                                        class="fa-solid fa-plus"></i> Add Info</button>
+                            </div>
+
+                            <!-- Evening -->
+                            <div class="schedule-section" id="evening-schedule">
+                                <h4 style="color: #6C63FF;; border-bottom: 2px solid #6C63FF;; padding-bottom: 5px;"><i
+                                        class="fa-solid fa-moon"></i> Evening</h4>
+                                <div class="blocks mt-2" style="min-height: 50px;"></div>
+                                <button class="btn primary-btn add-time-block w-100 mt-3 hover-lift"
+                                    data-period="evening"
+                                    style="background: #6C63FF;; border:none; box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);"><i
+                                        class="fa-solid fa-plus"></i> Add Info</button>
+                            </div>
+
+                            <!-- Night -->
+                            <div class="schedule-section" id="night-schedule">
+                                <h4 style="color: #10B981;; border-bottom: 2px solid #10B981;; padding-bottom: 5px;"><i
+                                        class="fa-solid fa-star"></i> Night</h4>
+                                <div class="blocks mt-2" style="min-height: 50px;"></div>
+                                <button class="btn primary-btn add-time-block w-100 mt-3 hover-lift" data-period="night"
+                                    style="background: #10B981;; border:none; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);"><i
+                                        class="fa-solid fa-plus"></i> Add Info</button>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+                <div class="mt-4">
+                    <section class="card card-animated stagger-4" id="settings" style="background: var(--card-bg);">
+                        <h3 style="color: var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Danger Zone
+                            (App Operations)</h3>
+                        <div class="reset-buttons d-flex gap-3 justify-content-center mt-3">
+                            <button id="reset-reminders-main" class="btn danger-btn hover-lift" style="flex: 1;"><i
+                                    class="fa-solid fa-eraser"></i> Flush Reminders</button>
+                            <button id="reset-all" class="btn danger-btn hover-lift"
+                                style="flex: 1; background: #991b1b;"><i class="fa-solid fa-skull"></i> Factory
+                                Reset</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Global Search Modal -->
+            <div id="search-results-modal" class="modal hidden fade-in" style="backdrop-filter: blur(10px);">
+                <div class="modal-content bounce-in"
+                    style="border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.2);">
+                    <span class="close-modal text-right" style="display:block; cursor:pointer; font-size: 24px;"
+                        aria-label="Close modal">&times;</span>
+                    <h3 style="color: var(--primary);"><i class="fa-solid fa-magnifying-glass"></i> Search Network</h3>
+                    <div id="search-results-container" class="mt-3"></div>
+                </div>
+            </div>
+
+            <!-- Schedule Modal (Animated) -->
+            <div id="schedule-modal" class="modal hidden fade-in" style="z-index: 99999; backdrop-filter: blur(8px);">
+                <div class="modal-content bounce-in"
+                    style="max-width: 450px; text-align: center; border-radius: 24px; box-shadow: 0 30px 60px rgba(0,0,0,0.25); padding: 40px;">
+                    <span class="close-schedule-modal text-right"
+                        style="display:block; cursor:pointer; font-size: 28px; color: var(--text-color); margin-top: -15px;"
+                        aria-label="Close modal">&times;</span>
+
+                    <div
+                        style="background: rgba(108, 99, 255, 0.1); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+                        <i class="fa-regular fa-clock" style="font-size: 40px; color: var(--primary);"></i>
+                    </div>
+
+                    <h3 class="mb-2" style="color: var(--text-color); font-weight: 800; font-size: 1.8rem;">Time Block
+                    </h3>
+                    <p style="opacity: 0.7; margin-bottom: 25px;">Reserve time for deep focus or specific routines.</p>
+
+                    <div style="text-align: left;">
+                        <label
+                            style="font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; display: block; color: var(--primary);">Time
+                            Marker</label>
+                        <input type="text" id="schedule-time-input" placeholder="e.g. 8:00 AM" class="mb-4"
+                            style="width: 100%; border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; font-size: 1.1rem; transition: border 0.3s; background: var(--bg-color); color: var(--text-color);">
+
+                        <label
+                            style="font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; display: block; color: var(--primary);">Activity
+                            / Details</label>
+                        <input type="text" id="schedule-desc-input" placeholder="e.g. Advanced Mathematics" class="mb-4"
+                            style="width: 100%; border: 2px solid var(--border-color); border-radius: 12px; padding: 15px; font-size: 1.1rem; transition: border 0.3s; background: var(--bg-color); color: var(--text-color);">
+                    </div>
+
+                    <button id="save-schedule-btn" class="btn primary-btn w-100 hover-lift"
+                        style="padding: 15px; font-size: 1.1rem; border-radius: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;"><i
+                            class="fa-solid fa-floppy-disk"></i> Lock In</button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>
